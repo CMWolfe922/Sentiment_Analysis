@@ -8,16 +8,16 @@
 
 #### Reddit "TO-DOs"
 
-[x] Build a list of subreddits that I want searched daily
-[x] Give that list a variable name
-[x] pass the list into the get_top_25_post() function
-[x] create empty list to append top_25_post data to
-[x] append data to list and then shape into pandas df
-[x] Retrieve Post ID from Panda Dataframe
-[x] assign ID to submission value of Reddit instance
-[x] use submission.comment.list() to retrieve all of the comment data
-[] append comment data to a list
-[] create another pandas dataframe for just the comments
-[] Create function to find commonly used words
-[] Create CSV files from the commonly used words
-[] Find some type of package or API to help with the Sentiment Analysis
+- [x] Build a list of subreddits that I want searched daily
+- [x] Give that list a variable name
+- [x] pass the list into the get_top_25_post() function
+- [x] create empty list to append top_25_post data to
+- [x] append data to list and then shape into pandas df
+- [x] Retrieve Post ID from Panda Dataframe
+- [x] assign ID to submission value of Reddit instance
+- [x] use submission.comment.list() to retrieve all of the comment data
+- [ ] append comment data to a list
+- [ ] create another pandas dataframe for just the comments
+- [ ] Create function to find commonly used words
+- [ ] Create CSV files from the commonly used words
+- [ ] Find some type of package or API to help with the Sentiment Analysis
