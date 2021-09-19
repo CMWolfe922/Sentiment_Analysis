@@ -38,3 +38,7 @@ def choose_subreddit(subreddit_list):
     return subreddit
 
 choose_subreddit(subreddits)
+
+
+# TODO: WRITE POSTS TO CSV
+post_path = f"data/{subreddit}_posts.csv"
