@@ -78,4 +78,9 @@ df = return_subreddit_df("FluentInFinance", limit=10)
 # PASS DF INTO FUNC TO RETRIEVE POST COMMENTS
 comments = return_comments_for(df["id"])
 
-comments.sort()
+# write data to CSV file for now. Save in Data folder
+comment_data = comments.sort()
+
+file = open(f"data\{df['subreddit']}_comments.csv", 'a')
+file.write(comment_data)
+file.close()
