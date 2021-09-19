@@ -79,8 +79,8 @@ df = return_subreddit_df("FluentInFinance", limit=10)
 comments = return_comments_for(df["id"])
 
 # write data to CSV file for now. Save in Data folder
-comment_data = comments.sort()
-
-file = open(f"data\{df['subreddit']}_comments.csv", 'a')
+comment_data = comments
+path = f"data/{df['subreddit']}_comments.csv"
+file = open(path, 'a')
 file.write(comment_data)
 file.close()
