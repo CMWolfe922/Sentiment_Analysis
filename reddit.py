@@ -1,12 +1,8 @@
-import sys
-# insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, 'C:/build')
-
 # commonly used words
 import collections
 import pandas as pd
-import matplotlib.pyplot as plt
-%matplotlib inline
+# import matplotlib.pyplot as plt
+# %matplotlib inline
 
 # -------------------------------------------------------------------------- #
 
@@ -15,8 +11,8 @@ import praw
 from praw.models import MoreComments
 import pandas as pd
 # my "secret" file. Holds my usernames and passwords
-import acctInfo
-from acctInfo import reddit_client_secret, reddit_client_id, reddit_user_agent
+
+from secrets import reddit_client_secret, reddit_client_id, reddit_user_agent
 # -------------------------------------------------------------------------- #
 
 # now that I have imported everything, CREATE A REDDIT INSTANCE:
