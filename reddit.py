@@ -93,17 +93,19 @@ def choose_subreddit(subreddit_list):
 # CREATE PRAW INSTANCE
 reddit = praw.Reddit(client_id=reddit_client_id, client_secret=reddit_client_secret, user_agent=reddit_user_agent)
 
+# HAVE USER CHOOSE THE SUBREDDIT TO GET COMMENT DATA FOR
 subreddit = choose_subreddit(subreddits)
 
-# CALL FUNC TO FOR SUBREDDIT DATA
+# CALL FUNC TO GET SUBREDDIT POSTS DF
 df = return_subreddit_df(subreddit, limit=25)
+
+# WRITE DF TO CSV FILE
+post_path = f"data/{subreddit}_posts.csv"
+df.to_csv(post_path, sep='|')
 
 # PASS DF INTO FUNC TO RETRIEVE POST COMMENTS
 comments = return_comments_for(df["id"])
-
+comment_df = pd.DataFrame(comments)
 # write data to CSV file for now. Save in Data folder
-comment_data = comments
-path = f"data/{subreddit}_comments.csv"
-file = open(path, 'a')
-file.write(comment_data)
-file.close()
+comment_path = f"data/{subreddit}_comments.csv"
+df.to_csv(comment_path, sep="|")

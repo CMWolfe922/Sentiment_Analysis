@@ -13,10 +13,36 @@ subreddits = ["wallstreetbets", "StocksAndTrading", "Daytrading", "StockMarket",
               "futurestrading", "interactivebrokers",  "wallstreetbetsnew", "UltimateTraders",
               "daytradingoptions", "DayTradingCrypro", "FluentInFinance"]
 
+# FIGURE OUT WAY TO PASS EACH SUBREDDIT TO RETURN DF FUNC
+# MAYBE CREATING A GENERATOR FUNC TO YIELD EACH OPTION IN THE
+# LIST WILL WORK.
+def return_subreddit_df(subreddit="all", limit=25):
+    """
+    :param subreddit: Which subreddit to get top posts.
 
-# index_subs = [enumerate(subreddits) for i in subreddits]
+    :param limit: number of desired posts. Default 25
+    (This is for setting the limit after.hot(limit=25)
+    and eventually determined from user input.)
 
-# print(index_subs)
+    :returns: top posts in subreddit or default (top posts on reddit).
+    data is returned in pandas df with the following columns:
+    >>> title, score, id, subreddit, url, comments, selftext, created <<<
+    """
+    # empty list to insert data to:
+    posts = []
+    # variable for data
+    top_posts = reddit.subreddit(subreddit).hot(
+        limit=limit)  # limit and subreddit params
+
+    # FOR loop to append data to posts
+    for post in top_posts:
+        posts.append([post.title, post.score, post.id, post.subreddit,
+                     post.url, post.num_comments, post.selftext, post.created])
+
+    # Create df
+    df = pd.DataFrame(posts, columns=[
+                      "title", "score", "id", "subreddit", "url", "comments", "selftext", "created"])
+    return df
 
 
 # TODO: CREATE A WAY TO ASK USER FOR WHICH SUBREDDIT THEY WANT
