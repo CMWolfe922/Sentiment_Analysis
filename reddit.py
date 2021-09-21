@@ -105,8 +105,8 @@ df.to_csv(post_path, sep='|')
 
 # PASS DF INTO FUNC TO RETRIEVE POST COMMENTS
 comments = return_comments_for(df["id"])
-sorted_comments = comments.sort
-comment_df = pd.DataFrame(sorted_comments, columns=["Comments"])
-# write data to CSV file for now. Save in Data folder
+print(comments)
+comment_df = pd.DataFrame(comments, columns=["Comments"])
+# # write data to CSV file for now. Save in Data folder
 comment_path = f"data/{subreddit}_comments.csv"
 df.to_csv(comment_path, sep="|")
