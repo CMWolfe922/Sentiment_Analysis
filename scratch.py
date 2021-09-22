@@ -1,11 +1,12 @@
 # Test write data to CSV file for now. Save in Data folder
-subreddit = "TestSubreddit"
-comment_data = "Hello World"
-path = f"data/{subreddit}_comments.csv"
-file = open(path, 'a')
-file.write(comment_data)
-file.close()
+# subreddit = "TestSubreddit"
+# comment_data = "Hello World"
+# path = f"data/{subreddit}_comments.csv"
+# file = open(path, 'a')
+# file.write(comment_data)
+# file.close()
 
+4
 
 subreddits = ["wallstreetbets", "StocksAndTrading", "Daytrading", "StockMarket", "CryptoCurrency",
               "stocks", "Trading", "CryptoMarkets", "Forex", "ethtrader", "DayTradingPro", "options",
@@ -63,7 +64,7 @@ def choose_subreddit(subreddit_list):
     subreddit = subreddit_list[idx]
     return subreddit
 
-choose_subreddit(subreddits)
+
 
 
 
@@ -75,11 +76,22 @@ THE PANDAS DF T0 CSV FILES TO BE MONITORED FOR SENTIMENT
 ANALYSIS.
 """
 # TODO: WRITE POSTS TO CSV
-post_path = f"data/{subreddit}_posts.csv"
+
 
 """Create a function for the common words script that works with the
 reddit data. """
 import collections
+import pandas as pd
+# IMPLEMENT A FOLDER SEARCH FOR EVERY FILE IN A DIRECTORY.
+# SEARCH THROUGH EVERY FILE IN THE DATA DIRECTORY AND READ EACH CSV FILE
+# LINE FOR LINE AND GET THE COMMON WORD COUNT.
+
+def search_data_dir(path_to_data):
+    for file in path_to_data:
+        f = pd.read_csv(file)
+        print(f)
+
+
 def get_words(path, encoding="utf8"):
 
     path = path
@@ -122,3 +134,9 @@ def get_words(path, encoding="utf8"):
     lst = word_counter.most_common(n_print)
     df = pd.DataFrame(lst, column=['Word', 'Count'])
     df.plot.bar(x='Word', y='Count')
+
+
+subreddit = choose_subreddit(subreddits)
+post_path = f"data/{subreddit}_comments.csv"
+# try file search function
+search_data_dir(post_path)
