@@ -1,3 +1,5 @@
+import pandas as pd
+
 # I GOT THIS FROM SOMEWHERE ELSE ON THE INTERNET. I FORGOT TO SAVE THE
 # LINK. BUT I STILL NEED TO CHANGE THIS TO FIT MY NEEDS FOR THIS
 # PROJECT.
@@ -41,6 +43,8 @@ for word, count in word_counter.most_common(n_print):
 file.close()
 # Create a data frame of the most common words
 # Draw a bar chart
+
+
 lst = word_counter.most_common(n_print)
 df = pd.DataFrame(lst, columns=['Word', 'Count'])
 df.plot.bar(x='Word', y='Count')
