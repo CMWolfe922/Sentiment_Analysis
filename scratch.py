@@ -76,3 +76,49 @@ ANALYSIS.
 """
 # TODO: WRITE POSTS TO CSV
 post_path = f"data/{subreddit}_posts.csv"
+
+"""Create a function for the common words script that works with the
+reddit data. """
+import collections
+def get_words(path, encoding="utf8"):
+
+    path = path
+    file = open(path, encoding=encoding)
+    a = file.read()
+    # now the stop words
+    stopwords = set(line.strip() for line in open(path))
+    stopwords = stopwords.union(set(['mr', 'one', 'two', 'said']))
+
+    # now create a dict and add to it for every word in the file
+    # that doesn't exist but if it does increase the count by 1
+    wordcount = {}
+    # now I need to split by punctuation and use case delimiters to prevent duplicates
+    for word in a.lower().split():
+        word = word.replace(".", "")
+        word = word.replace(",", "")
+        word = word.replace(":", "")
+        word = word.replace("\"", "")
+        word = word.replace("!", "")
+        word = word.replace("â€œ", "")
+        word = word.replace("â€", "")
+        word = word.replace("*", "")
+
+        if word not in stopwords:
+            if word not in wordcount:
+                wordcount[word] = 1
+            else:
+                wordcount[word] += 1
+
+    # I can have user input choose how many of the top most common words to use.
+    n_print = int(input("How many most common words to print: "))
+    print("\nOK. The {} most common words are as follows\n".format(n_print))
+    word_counter = collections.Counter(wordcount)
+    for word, count in word_counter.most_common(n_print):
+        print(word, ": ", count)
+    #close the file
+    file.close()
+
+    # Create data frame of the most common wordss and draw a bar chart
+    lst = word_counter.most_common(n_print)
+    df = pd.DataFrame(lst, column=['Word', 'Count'])
+    df.plot.bar(x='Word', y='Count')

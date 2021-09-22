@@ -1,3 +1,4 @@
+import collections
 import pandas as pd
 
 # I GOT THIS FROM SOMEWHERE ELSE ON THE INTERNET. I FORGOT TO SAVE THE
@@ -8,43 +9,91 @@ import pandas as pd
 
 # Read input file, note the encoding is specified here
 # It may be different in your text file
-file = open('PrideandPrejudice.txt', encoding="utf8")
-a = file.read()
-# Stopwords
-stopwords = set(line.strip() for line in open('stopwords.txt'))
-stopwords = stopwords.union(set(['mr', 'mrs', 'one', 'two', 'said']))
-# Instantiate a dictionary, and for every word in the file,
-# Add to the dictionary if it doesn't exist. If it does, increase the count.
-wordcount = {}
-# To eliminate duplicates, remember to split by punctuation, and use case demiliters.
-for word in a.lower().split():
-    word = word.replace(".", "")
-    word = word.replace(",", "")
-    word = word.replace(":", "")
-    word = word.replace("\"", "")
-    word = word.replace("!", "")
-    word = word.replace("â€œ", "")
-    word = word.replace("â€˜", "")
-    word = word.replace("*", "")
-    if word not in stopwords:
-        if word not in wordcount:
-            wordcount[word] = 1
-        else:
-            wordcount[word] += 1
+# file = open('PrideandPrejudice.txt', encoding="utf8")
+# a = file.read()
+# # Stopwords
+# stopwords = set(line.strip() for line in open('stopwords.txt'))
+# stopwords = stopwords.union(set(['mr', 'mrs', 'one', 'two', 'said']))
+# # Instantiate a dictionary, and for every word in the file,
+# # Add to the dictionary if it doesn't exist. If it does, increase the count.
+# wordcount = {}
+# # To eliminate duplicates, remember to split by punctuation, and use case demiliters.
+# for word in a.lower().split():
+#     word = word.replace(".", "")
+#     word = word.replace(",", "")
+#     word = word.replace(":", "")
+#     word = word.replace("\"", "")
+#     word = word.replace("!", "")
+#     word = word.replace("â€œ", "")
+#     word = word.replace("â€˜", "")
+#     word = word.replace("*", "")
+#     if word not in stopwords:
+#         if word not in wordcount:
+#             wordcount[word] = 1
+#         else:
+#             wordcount[word] += 1
 
-# TODO: CHANGE THIS TO LIST OF INPUTS DONE IN THE SCRIPT
-# Print most common word
-n_print = int(input("How many most common words to print: "))
-print("\nOK. The {} most common words are as follows\n".format(n_print))
-word_counter = collections.Counter(wordcount)
-for word, count in word_counter.most_common(n_print):
-    print(word, ": ", count)
-# Close the file
-file.close()
-# Create a data frame of the most common words
-# Draw a bar chart
+# # TODO: CHANGE THIS TO LIST OF INPUTS DONE IN THE SCRIPT
+# # Print most common word
+# n_print = int(input("How many most common words to print: "))
+# print("\nOK. The {} most common words are as follows\n".format(n_print))
+# word_counter = collections.Counter(wordcount)
+# for word, count in word_counter.most_common(n_print):
+#     print(word, ": ", count)
+# # Close the file
+# file.close()
+# # Create a data frame of the most common words
+# # Draw a bar chart
 
 
-lst = word_counter.most_common(n_print)
-df = pd.DataFrame(lst, columns=['Word', 'Count'])
-df.plot.bar(x='Word', y='Count')
+# lst = word_counter.most_common(n_print)
+# df = pd.DataFrame(lst, columns=['Word', 'Count'])
+# df.plot.bar(x='Word', y='Count')
+path = r"data/CryptoMarkets_comments.csv"
+
+def get_words(path, encoding="utf8"):
+
+    path = path
+    file = open(path, encoding=encoding)
+    a = file.read()
+    # now the stop words
+    stopwords = set(line.strip() for line in open(path))
+    stopwords = stopwords.union(set(['mr', 'one', 'two', 'said']))
+
+    # now create a dict and add to it for every word in the file
+    # that doesn't exist but if it does increase the count by 1
+    wordcount = {}
+    # now I need to split by punctuation and use case delimiters to prevent duplicates
+    for word in a.lower().split():
+        word = word.replace(".", "")
+        word = word.replace(",", "")
+        word = word.replace(":", "")
+        word = word.replace("\"", "")
+        word = word.replace("!", "")
+        word = word.replace("â€œ", "")
+        word = word.replace("â€", "")
+        word = word.replace("*", "")
+
+        if word not in stopwords:
+            if word not in wordcount:
+                wordcount[word] = 1
+            else:
+                wordcount[word] += 1
+
+    # I can have user input choose how many of the top most common words to use.
+    n_print = int(input("How many most common words to print: "))
+    print("\nOK. The {} most common words are as follows\n".format(n_print))
+    word_counter = collections.Counter(wordcount)
+    for word, count in word_counter.most_common(n_print):
+        print(word, ": ", count)
+    #close the file
+    file.close()
+
+    # Create data frame of the most common wordss and draw a bar chart
+    lst = word_counter.most_common(n_print)
+    df = pd.DataFrame(lst, column=['Word', 'Count'])
+    df.plot.bar(x='Word', y='Count')
+
+
+if __name__ == '__main__':
+    get_words(path)
