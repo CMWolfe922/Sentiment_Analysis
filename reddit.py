@@ -111,3 +111,7 @@ comment_df = pd.DataFrame(comments, columns=["Comments"])
 # # write data to CSV file for now. Save in Data folder
 comment_path = f"data/{subreddit}_comments.csv"
 df.to_csv(comment_path, sep="|")
+
+"""I need to fix the comments that are being written to a CSV file for
+because some reason they're saving the wrong comments to the CSV file.
+It may be because I am using trying to save the wrong data. """
