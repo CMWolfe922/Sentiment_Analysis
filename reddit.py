@@ -52,21 +52,19 @@ def return_subreddit_df(subreddit="all", limit=25):
     return df
 
 
-def return_comments_for(ID_list):
+def return_comments_for(ID):
     # empty list to append comments to
     _comments = []
     """
-    :param ID_list: list of post IDs
-    :returns: list of comments for each post ID
-    in ID_list
+    :param ID: individual ID 
+    :returns: list of comments for post ID
+    in ID
     """
-    # for loop to extract each ID one by one
-    for ID in ID_list:
-        # Create submission instance
-        submission = reddit.submission(id=ID)
-        submission.comments.replace_more(limit=None)
-        for comment in submission.comments.list():
-            _comments.append(comment.body)
+    # Create submission instance
+    submission = reddit.submission(id=ID)
+    submission.comments.replace_more(limit=None)
+    for comment in submission.comments.list():
+        _comments.append(comment.body)
     return _comments
 
 
