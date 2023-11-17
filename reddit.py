@@ -10,13 +10,13 @@ import pandas as pd
 import praw
 from praw.models import MoreComments
 import pandas as pd
-# my "secret" file. Holds my usernames and passwords
+# my "config" file. Holds my usernames and passwords
 
-from secrets import reddit_client_secret, reddit_client_id, reddit_user_agent
+from config import REDDIT_CLIENT_SECRET, REDDIT_CLIENT_ID, REDDIT_USER_AGENT
 # -------------------------------------------------------------------------- #
 
 # now that I have imported everything, CREATE A REDDIT INSTANCE:
-reddit = praw.Reddit(client_id=reddit_client_id, client_secret=reddit_client_secret, user_agent=reddit_user_agent)
+reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID, client_secret=REDDIT_CLIENT_SECRET, user_agent=REDDIT_USER_AGENT)
 
 # create list of subreddits I want to extract post and comment data from each day:
 subreddits = ["wallstreetbets", "StocksAndTrading", "Daytrading", "StockMarket", "CryptoCurrency",
@@ -91,26 +91,23 @@ def choose_subreddit(subreddit_list):
     return subreddit
 
 # CREATE PRAW INSTANCE
-reddit = praw.Reddit(client_id=reddit_client_id, client_secret=reddit_client_secret, user_agent=reddit_user_agent)
+reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID, client_secret=REDDIT_CLIENT_SECRET, user_agent=REDDIT_USER_AGENT)
 
 # HAVE USER CHOOSE THE SUBREDDIT TO GET COMMENT DATA FOR
 subreddit = choose_subreddit(subreddits)
 
 # CALL FUNC TO GET SUBREDDIT POSTS DF
-df = return_subreddit_df(subreddit, limit=25)
-
+sub_df = return_subreddit_df(subreddit, limit=25)
+sub_ids = [id for id in sub_df["id"]]
+print(sub_ids)
 # WRITE DF TO CSV FILE
 post_path = f"data/{subreddit}_posts.csv"
-df.to_csv(post_path, sep='|')
-
-# PASS DF INTO FUNC TO RETRIEVE POST COMMENTS
-comments = return_comments_for(df["id"])
-print(comments)
-comment_df = pd.DataFrame(comments, columns=["Comments"])
-
-# # write data to CSV file for now. Save in Data folder
 comment_path = f"data/{subreddit}_comments.csv"
-df.to_csv(comment_path, sep="|")
+sub_df.to_csv(post_path, sep='|')
+
+sub_comments = [id for sub_ids in return_comments_for(id)]
+comments_df = pd.DataFrame(sub_comments, columns=['Comments'])
+comments_df.to_csv(comment_path, sep='|')
 
 """I need to fix the comments that are being written to a CSV file for
 because some reason they're saving the wrong comments to the CSV file.
